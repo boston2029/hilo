@@ -9,13 +9,41 @@
 <body>
   <img src="starry.png">
   <div class="container">
+    <h1>Posting is a work in progress</h1>
+    <hr>
     <h1>Post</h1>
-    <a href='/'>Go Back</a>
+    <a href='index.html'>Go Back</a>
     <form>
-      <input type="text" placeholder="Title"><br>
-      <textarea placeholder="Body"></textarea><br>
+      <input type="text" required placeholder="Title"><br>
+      <input type="text" required placeholder="Nickname/alias"><br>
+      <textarea required placeholder="Body"></textarea><br>
       <input type="submit" value="Post!">
     </form>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+      import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+      const firebaseConfig = {
+        apiKey: "AIzaSyDNr3QwSnxf3LMmvyEndn17-zViExgLxL0",
+        authDomain: "hilo-6e067.firebaseapp.com",
+        projectId: "hilo-6e067",
+        storageBucket: "hilo-6e067.appspot.com",
+        messagingSenderId: "1015818842484",
+        appId: "1:1015818842484:web:d9dd85d0e6ef381ae8fc21"
+      };
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase();
+
+      document.querySelector('form').addEventListener('submit', (e) => {
+        e.preventDefault()
+        set(ref(db, "posts/"+Math.round(Math.round(Math.random()*10000000000)/100000)), {
+          title: document.querySelector('input[placeholder=Title]').value,
+          author: document.querySelector('input:not([placeholder=Title])').value,
+          body: document.querySelector('textarea').value
+        }).then(() => {
+          alert("Posted!")
+        })
+      })
+    </script>
   </div>
 </body>
 </html>

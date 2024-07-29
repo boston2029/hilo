@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>hilo</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <style>
+    a {display:block;}
+  </style>
+</head>
+<body>
+  <img src="starry.png">
+  <div class="container">
+    <a href='index.html'>Home</a>
+    <h1>Kailua</h1>
+    <h2>Writings of the People!</h2>
+  </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyDNr3QwSnxf3LMmvyEndn17-zViExgLxL0",
+      authDomain: "hilo-6e067.firebaseapp.com",
+      projectId: "hilo-6e067",
+      storageBucket: "hilo-6e067.appspot.com",
+      messagingSenderId: "1015818842484",
+      appId: "1:1015818842484:web:d9dd85d0e6ef381ae8fc21"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
+    onValue(ref(db, "posts"), (snapshot) => {
+      snapshot.forEach(one => {
+        document.querySelector('.container').innerHTML+=`<a href='kailua.html?${one.key}'></a>`
+        document.querySelector('.container').lastChild.innerText=one.val().title
+      })
+    })
+  </script>
+</body>
+</html>
